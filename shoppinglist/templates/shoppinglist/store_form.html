@@ -1,0 +1,157 @@
+{% extends "shoppinglist/base.html" %}
+
+{% block title %}
+Add / Edit Store
+{% endblock %}
+
+{% block content %}
+
+<div class="max-w-3xl mx-auto py-10 px-4">
+
+    <div class="card bg-base-100 shadow-2xl border border-base-300">
+
+        <div class="card-body">
+
+            <!-- HEADER -->
+
+            <div class="flex items-center justify-between mb-8">
+
+                <div>
+
+                    <h1 class="text-4xl font-bold text-primary">
+
+                        🏪 Add / Edit Store
+
+                    </h1>
+
+                    <p class="text-base-content/60 mt-2">
+
+                        Manage grocery store details and branding
+
+                    </p>
+
+                </div>
+
+                <a
+                    href="{% url 'store_list' %}"
+                    class="btn btn-outline"
+                >
+                    ← Back
+                </a>
+
+            </div>
+
+            <!-- FORM -->
+
+            <form
+                method="post"
+                enctype="multipart/form-data"
+                class="space-y-6"
+            >
+
+                {% csrf_token %}
+
+                <!-- NAME -->
+
+                <div>
+
+                    <label class="label">
+
+                        <span class="label-text font-semibold">
+
+                            Store Name
+
+                        </span>
+
+                    </label>
+
+                    {{ form.name }}
+
+                </div>
+
+                <!-- LOCATION -->
+
+                <div>
+
+                    <label class="label">
+
+                        <span class="label-text font-semibold">
+
+                            Location
+
+                        </span>
+
+                    </label>
+
+                    {{ form.location }}
+
+                </div>
+
+                <!-- LOGO -->
+
+                <div>
+
+                    <label class="label">
+
+                        <span class="label-text font-semibold">
+
+                            Store Logo
+
+                        </span>
+
+                    </label>
+
+                    {{ form.logo }}
+
+                </div>
+
+                <!-- PREVIEW -->
+
+                {% if form.instance.logo %}
+
+                    <div class="mt-4">
+
+                        <p class="font-medium mb-2">
+
+                            Current Logo
+
+                        </p>
+
+                        <img
+                            src="{{ form.instance.logo.url }}"
+                            class="w-32 h-32 object-contain rounded-xl border p-2 bg-white"
+                        >
+
+                    </div>
+
+                {% endif %}
+
+                <!-- BUTTONS -->
+
+                <div class="flex gap-3 pt-4">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        💾 Save Store
+                    </button>
+
+                    <a
+                        href="{% url 'store_list' %}"
+                        class="btn btn-outline"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

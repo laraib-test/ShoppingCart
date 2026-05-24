@@ -1,0 +1,198 @@
+{% extends "shoppinglist/base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto px-4 py-10">
+
+    <!-- HERO SECTION -->
+
+    <div class="hero bg-base-100 rounded-3xl shadow-xl border border-base-300 mb-12">
+
+        <div class="hero-content flex-col lg:flex-row-reverse gap-10 py-14">
+
+            <img
+                src="https://cdn-icons-png.flaticon.com/512/3081/3081986.png"
+                class="max-w-sm w-64"
+            />
+
+            <div>
+
+                <h1 class="text-6xl font-bold text-primary leading-tight">
+
+                    Grocery Shopping
+                    <br>
+                    Made Easy 🛒
+
+                </h1>
+
+                <p class="py-6 text-lg text-base-content/70 max-w-2xl">
+
+                    Compare grocery prices across stores,
+                    manage products, organize categories,
+                    and track your shopping cart — all in one place.
+
+                </p>
+
+                <div class="flex flex-wrap gap-4">
+
+                    <a
+                        href="{% url 'product_list' %}"
+                        class="btn btn-primary btn-lg"
+                    >
+                        🛍 Browse Products
+                    </a>
+
+                    <a
+                        href="{% url 'price_comparison' %}"
+                        class="btn btn-outline btn-lg"
+                    >
+                        💰 Compare Prices
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- QUICK STATS -->
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+
+        <div class="stat bg-base-100 rounded-2xl shadow border border-base-300">
+
+            <div class="stat-figure text-primary text-4xl">
+                🛍
+            </div>
+
+            <div class="stat-title">
+                Products
+            </div>
+
+            <div class="stat-value text-primary">
+                {{ products.count|default:"12" }}
+            </div>
+
+        </div>
+
+        <div class="stat bg-base-100 rounded-2xl shadow border border-base-300">
+
+            <div class="stat-figure text-secondary text-4xl">
+                🏪
+            </div>
+
+            <div class="stat-title">
+                Stores
+            </div>
+
+            <div class="stat-value text-secondary">
+                {{ stores_count|default:"2" }}
+            </div>
+
+        </div>
+
+        <div class="stat bg-base-100 rounded-2xl shadow border border-base-300">
+
+            <div class="stat-figure text-accent text-4xl">
+                📦
+            </div>
+
+            <div class="stat-title">
+                Categories
+            </div>
+
+            <div class="stat-value text-accent">
+                {{ categories.count }}
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- CATEGORIES -->
+
+    <div class="flex items-center justify-between mb-8">
+
+        <div>
+
+            <h2 class="text-4xl font-bold">
+
+                Browse Categories
+
+            </h2>
+
+            <p class="text-base-content/60 mt-2">
+
+                Shop products by grocery category
+
+            </p>
+
+        </div>
+
+        <a
+            href="{% url 'category_list' %}"
+            class="btn btn-primary"
+        >
+            View All
+        </a>
+
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+        {% for category in categories %}
+
+            <div class="card bg-base-100 shadow-xl border border-base-300 hover:shadow-2xl transition duration-300">
+
+                <div class="card-body items-center text-center">
+
+                    {% if category.image %}
+
+                        <img
+                            src="{{ category.image.url }}"
+                            alt="{{ category.name }}"
+                            class="w-28 h-28 object-cover rounded-2xl shadow mb-4"
+                        >
+
+                    {% else %}
+
+                        <div class="text-7xl mb-4">
+                            🛒
+                        </div>
+
+                    {% endif %}
+
+                    <h2 class="card-title text-2xl">
+
+                        {{ category.name }}
+
+                    </h2>
+
+                    <div class="card-actions mt-6">
+
+                        <a
+                            href="{% url 'category_products' category.id %}"
+                            class="btn btn-primary"
+                        >
+                            View Products
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

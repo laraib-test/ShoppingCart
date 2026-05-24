@@ -1,0 +1,236 @@
+{% extends "shoppinglist/base.html" %}
+
+{% block title %}
+    Product Form
+{% endblock %}
+
+{% block content %}
+
+<div class="max-w-4xl mx-auto">
+
+    <!-- HEADER -->
+    <div class="mb-8">
+
+        <h1 class="text-4xl font-bold text-primary mb-2">
+
+            {% if object %}
+                ✏️ Edit Product
+            {% else %}
+                🛒 Add Product
+            {% endif %}
+
+        </h1>
+
+        <p class="text-gray-500">
+
+            {% if object %}
+                Update grocery product details
+            {% else %}
+                Add a new grocery product
+            {% endif %}
+
+        </p>
+
+    </div>
+
+    <!-- CARD -->
+    <div class="card bg-base-100 shadow-2xl border border-base-300">
+
+        <div class="card-body p-8">
+
+            <form
+                method="post"
+                enctype="multipart/form-data"
+            >
+
+                {% csrf_token %}
+
+                <!-- CATEGORY -->
+                <div class="form-control mb-6">
+
+                    <label class="label">
+
+                        <span class="label-text text-lg font-semibold">
+                            Category
+                        </span>
+
+                    </label>
+
+                    {{ form.category }}
+
+                    {% if form.category.errors %}
+
+                        <div class="text-error text-sm mt-2">
+
+                            {% for error in form.category.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+                <!-- PRODUCT NAME -->
+                <div class="form-control mb-6">
+
+                    <label class="label">
+
+                        <span class="label-text text-lg font-semibold">
+                            Product Name
+                        </span>
+
+                    </label>
+
+                    {{ form.name }}
+
+                    {% if form.name.errors %}
+
+                        <div class="text-error text-sm mt-2">
+
+                            {% for error in form.name.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+                <!-- QUANTITY -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+
+                    <!-- QUANTITY -->
+                    <div class="form-control">
+
+                        <label class="label">
+
+                            <span class="label-text text-lg font-semibold">
+                                Quantity
+                            </span>
+
+                        </label>
+
+                        {{ form.quantity }}
+
+                        {% if form.quantity.errors %}
+
+                            <div class="text-error text-sm mt-2">
+
+                                {% for error in form.quantity.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                    <!-- UNIT -->
+                    <div class="form-control">
+
+                        <label class="label">
+
+                            <span class="label-text text-lg font-semibold">
+                                Unit
+                            </span>
+
+                        </label>
+
+                        {{ form.unit }}
+
+                        {% if form.unit.errors %}
+
+                            <div class="text-error text-sm mt-2">
+
+                                {% for error in form.unit.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+                <!-- PRODUCT IMAGE -->
+                <div class="form-control mb-8">
+
+                    <label class="label">
+
+                        <span class="label-text text-lg font-semibold">
+                            Product Image
+                        </span>
+
+                    </label>
+
+                    {{ form.image }}
+
+                    {% if form.image.errors %}
+
+                        <div class="text-error text-sm mt-2">
+
+                            {% for error in form.image.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
+                    <!-- IMAGE PREVIEW -->
+                    {% if object.image %}
+
+                        <div class="mt-4">
+
+                            <img
+                                src="{{ object.image.url }}"
+                                alt="{{ object.name }}"
+                                class="w-32 h-32 object-cover rounded-xl border shadow"
+                            >
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+                <!-- BUTTONS -->
+                <div class="flex flex-wrap gap-4">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+
+                        {% if object %}
+                            💾 Update Product
+                        {% else %}
+                            ➕ Add Product
+                        {% endif %}
+
+                    </button>
+
+                    <a
+                        href="{% url 'product_list' %}"
+                        class="btn btn-outline"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

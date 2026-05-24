@@ -1,0 +1,63 @@
+{% extends "shoppinglist/base.html" %}
+
+{% block content %}
+
+<div class="max-w-md mx-auto mt-20">
+
+    <div class="card bg-base-100 shadow-xl">
+
+        <div class="card-body text-center">
+
+            <h2 class="card-title justify-center text-2xl text-error">
+
+                Delete Price
+
+            </h2>
+
+            <p>
+
+                Are you sure you want to delete this price?
+
+            </p>
+
+            <div class="mt-4 font-bold">
+
+                {{ object.product.name }}
+                -
+                {{ object.store.name }}
+                -
+                ${{ object.price }}
+
+            </div>
+
+            <form method="post" class="mt-6">
+
+                {% csrf_token %}
+
+                <div class="flex justify-center gap-4">
+
+                    <button
+                        type="submit"
+                        class="btn btn-error"
+                    >
+                        Yes, Delete
+                    </button>
+
+                    <a
+                        href="{% url 'price_comparison' %}"
+                        class="btn btn-outline"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{%extends"shoppinglist/base.html" %}
+<h2>Compare {{ product_name }}</h2>
+<select name="product" 
+    hx-get="/compare/" 
+    hx-target="#comparison"
+    hx-trigger="change">
+
+    {% for p in products %}
+        <option value="{{ p.name }}">{{ p.name }}</option>
+    {% endfor %}
+</select>
+
+<div id="comparison"></div>
+<div id="comparison">
+    {% include "shoppinglist/partials/compare_table.html" %}
+</div>
+{% endblock %}

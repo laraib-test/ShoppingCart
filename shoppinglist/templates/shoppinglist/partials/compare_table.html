@@ -1,0 +1,36 @@
+<table border="1">
+<tr>
+    <th>Store</th>
+    <th>Product</th>
+    <th>Price</th>
+    <th>Actions</th>
+</tr>
+    
+{% for price in prices %}
+<tr {% if forloop.first %} style="background-color: lightgreen;" {% endif %}>
+    <td>{{ price.store.name }}</td>
+    <td>${{ price.price }}</td>
+</tr>
+{% endfor %}
+</table>
+    <td>{{ price.store.name }}</td>
+    <td>{{ price.product.name }}</td>
+    <td>${{ price.price }}</td>
+    <td>
+        <button 
+            hx-get="{% url 'price_edit' price.id %}" 
+            hx-target="#modal">
+            ✏️ Edit
+        </button>
+
+        <button 
+            hx-post="{% url 'price_delete' price.id %}" 
+            hx-target="#table"
+            hx-swap="outerHTML">
+            🗑️ Delete
+        </button>
+    </td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

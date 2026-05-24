@@ -1,0 +1,245 @@
+{% extends "shoppinglist/base.html" %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto px-4 py-8">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+
+        <div>
+
+            <h1 class="text-4xl font-bold text-primary">
+                🛒 Grocery Price Comparison
+            </h1>
+
+            <p class="text-gray-500 mt-2">
+                Compare grocery prices across stores
+            </p>
+
+        </div>
+
+        <a href="{% url 'product_add' %}"
+           class="btn btn-primary rounded-xl">
+
+            ➕ Add Product
+
+        </a>
+
+    </div>
+
+    <!-- Comparison Table -->
+    <div class="overflow-x-auto bg-base-100 shadow-xl rounded-2xl">
+
+        <table class="table table-zebra w-full">
+
+            <thead class="bg-primary text-primary-content">
+
+                <tr>
+
+                    <th class="text-lg">
+                        Product
+                    </th>
+
+                    <th class="text-lg">
+                        Quantity
+                    </th>
+
+                    <th class="text-lg">
+                        Walmart
+                    </th>
+
+                    <th class="text-lg">
+                        FreshCo
+                    </th>
+
+                    <th class="text-lg">
+                        Cheapest Option
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for item in comparison_data %}
+
+                <tr class="hover">
+
+                    <!-- Product -->
+                    <td>
+
+                        <div class="flex items-center gap-4">
+
+                            {% if item.product.image %}
+
+                                <img
+                                    src="{{ item.product.image.url }}"
+                                    class="w-16 h-16 rounded-xl object-cover border"
+                                >
+
+                            {% else %}
+
+                                <div class="w-16 h-16 rounded-xl bg-gray-200 flex items-center justify-center">
+
+                                    🥦
+
+                                </div>
+
+                            {% endif %}
+
+                            <div>
+
+                                <div class="font-bold text-lg">
+
+                                    {{ item.product.name }}
+
+                                </div>
+
+                                <div class="text-sm text-gray-500">
+
+                                    {{ item.product.category.name }}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+                    <!-- Quantity -->
+                    <td>
+
+                        <span class="badge badge-outline badge-lg">
+
+                            {{ item.product.quantity }}
+                            {{ item.product.unit }}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+    {% if item.prices.Walmart %}
+
+        <div class="flex flex-col gap-2">
+
+            <span class="font-semibold text-lg">
+
+                ${{ item.prices.Walmart.price }}
+
+            </span>
+
+            <div class="flex gap-2">
+
+                <a
+                    href="{% url 'price_edit' item.prices.Walmart.id %}"
+                    class="btn btn-warning btn-xs"
+                >
+                    ✏️ Edit
+                </a>
+
+                <a
+                    href="{% url 'price_delete' item.prices.Walmart.id %}"
+                    class="btn btn-error btn-xs text-white"
+                >
+                    🗑 Delete
+                </a>
+
+            </div>
+
+        </div>
+
+    {% else %}
+
+        <span class="text-gray-400">
+            N/A
+        </span>
+
+    {% endif %}
+
+</td>
+
+                    <td>
+
+    {% if item.prices.FreshCo %}
+
+        <div class="flex flex-col gap-2">
+
+            <span class="font-semibold text-lg">
+
+                ${{ item.prices.FreshCo.price }}
+
+            </span>
+
+            <div class="flex gap-2">
+
+                <a
+                    href="{% url 'price_edit' item.prices.FreshCo.id %}"
+                    class="btn btn-warning btn-xs"
+                >
+                    ✏️ Edit
+                </a>
+
+                <a
+                    href="{% url 'price_delete' item.prices.FreshCo.id %}"
+                    class="btn btn-error btn-xs text-white"
+                >
+                    🗑 Delete
+                </a>
+
+            </div>
+
+        </div>
+
+    {% else %}
+
+        <span class="text-gray-400">
+            N/A
+        </span>
+
+    {% endif %}
+
+</td>
+
+                    <!-- Cheapest -->
+                    <td>
+
+                        <div class="badge badge-success badge-lg gap-2 p-4">
+
+                            💰 {{ item.cheapest_store }}
+
+                            (${{ item.cheapest_price }})
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="5" class="text-center py-10 text-gray-400">
+
+                        No products available
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

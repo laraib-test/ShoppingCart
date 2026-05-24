@@ -1,0 +1,51 @@
+{% extends "shoppinglist/base.html" %}
+
+{% block content %}
+
+<h1>Price Comparison</h1>
+
+<table border="1" cellpadding="10">
+
+    <tr>
+        <th>Product</th>
+        <th>Store</th>
+        <th>Location</th>
+        <th>Price</th>
+        <th>Category</th>
+    </tr>
+
+    {% for price in prices %}
+
+    <tr>
+
+        <td>
+            {{ price.product.name }}
+        </td>
+
+        <td>
+            {{ price.store.name }}
+        </td>
+
+        <td>
+            {{ price.store.location }}
+        </td>
+
+        <td>
+            ${{ price.price }}
+        </td>
+
+    </tr>
+
+    {% empty %}
+
+    <tr>
+        <td colspan="4">
+            No prices found.
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}
