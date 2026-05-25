@@ -12,15 +12,15 @@ Register
 
         <div class="card-body p-10">
 
-            <h2 class="text-4xl font-bold text-center mb-8">
+            <h1 class="text-4xl font-bold text-center mb-8">
                 Create Account
-            </h2>
+            </h1>
 
             <form method="post">
 
                 {% csrf_token %}
 
-                <!-- Username -->
+                <!-- USERNAME -->
                 <div class="form-control mb-5">
 
                     <label class="label">
@@ -29,11 +29,17 @@ Register
                         </span>
                     </label>
 
-                    {{ form.username }}
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Enter username"
+                        class="input input-bordered w-full"
+                        required
+                    >
 
                 </div>
 
-                <!-- Email -->
+                <!-- EMAIL -->
                 <div class="form-control mb-5">
 
                     <label class="label">
@@ -42,11 +48,17 @@ Register
                         </span>
                     </label>
 
-                    {{ form.email }}
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter email"
+                        class="input input-bordered w-full"
+                        required
+                    >
 
                 </div>
 
-                <!-- Password -->
+                <!-- PASSWORD -->
                 <div class="form-control mb-5">
 
                     <label class="label">
@@ -55,11 +67,17 @@ Register
                         </span>
                     </label>
 
-                    {{ form.password1 }}
+                    <input
+                        type="password"
+                        name="password1"
+                        placeholder="Enter password"
+                        class="input input-bordered w-full"
+                        required
+                    >
 
                 </div>
 
-                <!-- Confirm Password -->
+                <!-- CONFIRM PASSWORD -->
                 <div class="form-control mb-8">
 
                     <label class="label">
@@ -68,11 +86,17 @@ Register
                         </span>
                     </label>
 
-                    {{ form.password2 }}
+                    <input
+                        type="password"
+                        name="password2"
+                        placeholder="Confirm password"
+                        class="input input-bordered w-full"
+                        required
+                    >
 
                 </div>
 
-                <!-- Button -->
+                <!-- BUTTON -->
                 <button
                     type="submit"
                     class="btn btn-primary w-full text-lg"

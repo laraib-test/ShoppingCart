@@ -11,25 +11,26 @@ class RegisterForm(UserCreationForm):
     email = forms.EmailField()
 
     class Meta:
+
         model = User
 
-        fields = [
+        fields = (
             'username',
             'email',
             'password1',
-            'password2'
-        ]
+            'password2',
+        )
 
     def __init__(self, *args, **kwargs):
 
         super().__init__(*args, **kwargs)
 
-        for field in self.fields.values():
+        for field_name, field in self.fields.items():
 
             field.widget.attrs.update({
-                'class': 'input input-bordered w-full'
+                'class': 'input input-bordered w-full',
+                'placeholder': f'Enter {field_name}',
             })
-
 
 class PriceForm(forms.ModelForm):
 
