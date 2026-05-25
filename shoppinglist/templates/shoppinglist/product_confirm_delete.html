@@ -6,64 +6,50 @@ Delete Product
 
 {% block content %}
 
-<div class="max-w-2xl mx-auto py-12 px-4">
+<div class="max-w-2xl mx-auto mt-10">
 
     <div class="card bg-base-100 shadow-2xl border border-base-300">
 
-        <div class="card-body text-center">
+        <div class="card-body p-10 text-center">
 
             <!-- ICON -->
-
             <div class="text-6xl mb-4">
-
-                ⚠️
-
+                🗑️
             </div>
 
             <!-- TITLE -->
-
-            <h1 class="text-4xl font-bold text-error">
-
+            <h1 class="text-4xl font-bold text-error mb-4">
                 Delete Product
-
             </h1>
 
             <!-- MESSAGE -->
-
-            <p class="text-lg text-base-content/70 mt-4">
+            <p class="text-lg text-gray-500 mb-8">
 
                 Are you sure you want to delete
 
+                <span class="font-bold text-black">
+                    "{{ object.name }}"
+                </span>?
+
             </p>
 
-            <h2 class="text-2xl font-bold mt-2">
-
-                "{{ object.name }}"
-
-            </h2>
-
             <!-- PRODUCT IMAGE -->
-
             {% if object.image %}
 
-                <div class="flex justify-center mt-6">
+                <div class="flex justify-center mb-8">
 
                     <img
                         src="{{ object.image.url }}"
                         alt="{{ object.name }}"
-                        class="w-40 h-40 object-contain rounded-2xl border bg-white p-3 shadow"
+                        class="w-40 h-40 object-contain rounded-2xl border"
                     >
 
                 </div>
 
             {% endif %}
 
-            <!-- ACTIONS -->
-
-            <form
-                method="post"
-                class="mt-8"
-            >
+            <!-- BUTTONS -->
+            <form method="post">
 
                 {% csrf_token %}
 
@@ -73,7 +59,7 @@ Delete Product
                         type="submit"
                         class="btn btn-error text-white"
                     >
-                        🗑 Yes, Delete
+                        🗑️ Yes, Delete
                     </button>
 
                     <a
