@@ -6,74 +6,53 @@ Delete Product
 
 {% block content %}
 
-<div class="max-w-2xl mx-auto mt-10">
+<div class="flex justify-center items-center mt-16">
 
-    <div class="card bg-base-100 shadow-2xl border border-base-300">
+    <div class="bg-base-100 shadow-2xl rounded-3xl p-12 w-full max-w-2xl text-center">
 
-        <div class="card-body p-10 text-center">
+        <!-- TITLE -->
+        <h1 class="text-5xl font-bold text-error mb-6">
+            Delete Product
+        </h1>
 
-            <!-- ICON -->
-            <div class="text-6xl mb-4">
-                🗑️
+        <!-- MESSAGE -->
+        <p class="text-2xl text-gray-600 mb-10">
+
+            Are you sure you want to delete this product?
+
+        </p>
+
+        <!-- PRODUCT NAME -->
+        <h2 class="text-3xl font-bold mb-12">
+
+            {{ object.name }}
+
+        </h2>
+
+        <!-- BUTTONS -->
+        <form method="post">
+
+            {% csrf_token %}
+
+            <div class="flex justify-center gap-6">
+
+                <button
+                    type="submit"
+                    class="btn btn-error btn-lg text-white px-8"
+                >
+                    Yes, Delete
+                </button>
+
+                <a
+                    href="{% url 'product_list' %}"
+                    class="btn btn-outline btn-lg px-8"
+                >
+                    Cancel
+                </a>
+
             </div>
 
-            <!-- TITLE -->
-            <h1 class="text-4xl font-bold text-error mb-4">
-                Delete Product
-            </h1>
-
-            <!-- MESSAGE -->
-            <p class="text-lg text-gray-500 mb-8">
-
-                Are you sure you want to delete
-
-                <span class="font-bold text-black">
-                    "{{ object.name }}"
-                </span>?
-
-            </p>
-
-            <!-- PRODUCT IMAGE -->
-            {% if object.image %}
-
-                <div class="flex justify-center mb-8">
-
-                    <img
-                        src="{{ object.image.url }}"
-                        alt="{{ object.name }}"
-                        class="w-40 h-40 object-contain rounded-2xl border"
-                    >
-
-                </div>
-
-            {% endif %}
-
-            <!-- BUTTONS -->
-            <form method="post">
-
-                {% csrf_token %}
-
-                <div class="flex justify-center gap-4">
-
-                    <button
-                        type="submit"
-                        class="btn btn-error text-white"
-                    >
-                        🗑️ Yes, Delete
-                    </button>
-
-                    <a
-                        href="{% url 'product_list' %}"
-                        class="btn btn-outline"
-                    >
-                        Cancel
-                    </a>
-
-                </div>
-
-            </form>
-
-        </div>
+        </form>
 
     </div>
 
