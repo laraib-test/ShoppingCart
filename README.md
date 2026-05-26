@@ -80,6 +80,6 @@ python manage.py runserver
 http://127.0.0.1:8007/
 ## Create Superuser
 python manage.py createsuperuser
-Open browser:```bash
-git clone https://github.com/YOUR_USERNAME/Shoppingcart.git
+Open browser
+git clone https://github.com/laraib-test/Shoppingcart.git
 cd Shoppingcart
