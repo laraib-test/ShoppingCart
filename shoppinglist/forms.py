@@ -77,6 +77,38 @@ class PriceForm(forms.ModelForm):
                 }
             ),
         }
+    def clean(self):
+
+        cleaned_data = super().clean()
+
+        store = cleaned_data.get("store")
+        product_name = cleaned_data.get("product_name")
+
+        if store and product_name:
+
+            existing_product = Product.objects.filter(
+                name__iexact=product_name.strip()
+            ).first()
+
+            if existing_product:
+
+              duplicate = Price.objects.filter(
+                    store=store,
+                    product=existing_product
+                )
+                # ignore current object during edit
+            if self.instance.pk:
+                    duplicate = duplicate.exclude(
+                        pk=self.instance.pk
+                    )
+
+            if duplicate.exists():
+
+                    raise forms.ValidationError(
+                        "This product already has a price for this store."
+                    )
+
+        return cleaned_data
 
     def save(self, commit=True):
 
@@ -103,11 +135,13 @@ class PriceForm(forms.ModelForm):
             )
 
             price.product = product
-
         if commit:
             price.save()
 
         return price
+
+    
+        
 class StoreForm(forms.ModelForm):
     
     class Meta:
