@@ -1,4 +1,4 @@
-# Shopping Cart Django App
+# Grocery Shopping Django App
 
 A simple Django-based Shopping Cart application that allows users to:
 
