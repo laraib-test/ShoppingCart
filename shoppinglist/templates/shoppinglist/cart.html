@@ -99,19 +99,22 @@ My Cart
                                 {% csrf_token %}
 
                                 <input
-                                    type="number"
-                                    name="quantity"
-                                    value="{{ item.quantity }}"
-                                    min="1"
-                                    class="input input-bordered w-24"
+                                    
+   type="number"
+        name="quantity"
+        value="{{ item.quantity }}"
+        min="1"
+        class="input input-bordered w-20"
+
                                 >
 
-                                <button
-                                    type="submit"
-                                    class="btn btn-primary"
-                                >
-                                    Update
-                                </button>
+                                 <!-- UPDATE BUTTON -->
+    <button
+        type="submit"
+        class="btn btn-primary btn-sm"
+    >
+        Add to cart
+    </button>
 
                             </form>
 
@@ -121,7 +124,7 @@ My Cart
                                 href="{% url 'remove_cart_item' item.id %}"
                                 class="btn btn-error text-white"
                             >
-                                🗑 Remove
+                                🗑 Delete
                             </a>
 
                         </div>
