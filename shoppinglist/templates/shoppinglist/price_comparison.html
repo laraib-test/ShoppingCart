@@ -1,4 +1,5 @@
 {% extends "shoppinglist/base.html" %}
+{% load custom_filters %}
 
 {% block content %}
 
@@ -45,13 +46,9 @@
                         Quantity
                     </th>
 
-                    <th class="text-lg">
-                        Walmart
-                    </th>
-
-                    <th class="text-lg">
-                        FreshCo
-                    </th>
+                    {% for store in stores %}
+                   <th>{{ store.name }}</th>
+                   {% endfor %}
 
                     <th class="text-lg">
                         Cheapest Option
@@ -123,35 +120,55 @@
 
                     <td>
 
-    {% if item.prices.Walmart %}
+   {% for store in stores %}
 
-        <div class="flex flex-col gap-2">
+<td>
 
-            <span class="font-semibold text-lg">
+    {% with price_data=item.prices|get_item:store.name %}
 
-                ${{ item.prices.Walmart.price }}
+        {% if price_data %}
 
-            </span>
+            <div class="flex flex-col gap-2">
 
-            <div class="flex gap-2">
+                <span class="font-semibold text-lg">
 
-                <a
-                    href="{% url 'price_edit' item.prices.Walmart.id %}"
-                    class="btn btn-warning btn-xs"
-                >
-                    ✏️ Edit
-                </a>
+                    ${{ price_data.price }}
 
-                <a
-                    href="{% url 'price_delete' item.prices.Walmart.id %}"
-                    class="btn btn-error btn-xs text-white"
-                >
-                    🗑 Delete
-                </a>
+                </span>
+
+                <div class="flex gap-2">
+
+                    <a
+                        href="{% url 'price_edit' price_data.id %}"
+                        class="btn btn-warning btn-xs"
+                    >
+                        ✏️ Edit
+                    </a>
+
+                    <a
+                        href="{% url 'price_delete' price_data.id %}"
+                        class="btn btn-error btn-xs text-white"
+                    >
+                        🗑 Delete
+                    </a>
+
+                </div>
 
             </div>
 
-        </div>
+        {% else %}
+
+            <span class="text-gray-400">
+                N/A
+            </span>
+
+        {% endif %}
+
+    {% endwith %}
+
+</td>
+
+{% endfor %}
 
     {% else %}
 

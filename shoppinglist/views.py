@@ -81,18 +81,29 @@ def update_cart_item(request, item_id):
 
     if request.method == "POST":
 
-        quantity = int(
-            request.POST.get("quantity", 1)
-        )
+        try:
 
-        if quantity > 0:
+            quantity = int(
+                request.POST.get("quantity", 1)
+            )
 
-            item.quantity = quantity
-            item.save()
+            if quantity > 0:
 
-        else:
+                item.quantity = quantity
+                item.save()
 
-            item.delete()
+            else:
+
+                item.delete()
+
+        except (ValueError, TypeError):
+
+            from django.contrib import messages
+
+            messages.error(
+                request,
+                "Please enter a valid quantity."
+            )
 
     return redirect("cart")
 
@@ -331,7 +342,7 @@ class PriceComparisonView(TemplateView):
 
             })
 
-        context["comparison_data"] = comparison_data
+        context["stores"] = stores
 
         return context
 
