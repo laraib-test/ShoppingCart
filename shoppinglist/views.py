@@ -309,6 +309,7 @@ class PriceComparisonView(TemplateView):
         context = super().get_context_data(**kwargs)
 
         products = Product.objects.all()
+        stores = Store.objects.all()
 
         comparison_data = []
 
@@ -341,8 +342,10 @@ class PriceComparisonView(TemplateView):
                 "cheapest_store": cheapest_store,
 
             })
-
-        context["stores"] = stores
+          
+            context["stores"] = stores
+            context["comparison_data"] = comparison_data
+            
 
         return context
 

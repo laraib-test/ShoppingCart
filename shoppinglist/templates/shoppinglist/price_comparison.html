@@ -1,4 +1,5 @@
 {% extends "shoppinglist/base.html" %}
+
 {% load custom_filters %}
 
 {% block content %}
@@ -20,11 +21,11 @@
 
         </div>
 
-        <a href="{% url 'product_add' %}"
-           class="btn btn-primary rounded-xl">
-
-            ➕ Add Product
-
+        <a
+            href="{% url 'price_add' %}"
+            class="btn btn-primary rounded-xl"
+        >
+            ➕ Add Price
         </a>
 
     </div>
@@ -46,9 +47,14 @@
                         Quantity
                     </th>
 
+                    <!-- Dynamic Stores -->
                     {% for store in stores %}
-                   <th>{{ store.name }}</th>
-                   {% endfor %}
+
+                        <th class="text-lg">
+                            {{ store.name }}
+                        </th>
+
+                    {% endfor %}
 
                     <th class="text-lg">
                         Cheapest Option
@@ -118,120 +124,77 @@
 
                     </td>
 
-                    <td>
-
-   {% for store in stores %}
-
-<td>
-
-    {% with price_data=item.prices|get_item:store.name %}
-
-        {% if price_data %}
-
-            <div class="flex flex-col gap-2">
-
-                <span class="font-semibold text-lg">
-
-                    ${{ price_data.price }}
-
-                </span>
-
-                <div class="flex gap-2">
-
-                    <a
-                        href="{% url 'price_edit' price_data.id %}"
-                        class="btn btn-warning btn-xs"
-                    >
-                        ✏️ Edit
-                    </a>
-
-                    <a
-                        href="{% url 'price_delete' price_data.id %}"
-                        class="btn btn-error btn-xs text-white"
-                    >
-                        🗑 Delete
-                    </a>
-
-                </div>
-
-            </div>
-
-        {% else %}
-
-            <span class="text-gray-400">
-                N/A
-            </span>
-
-        {% endif %}
-
-    {% endwith %}
-
-</td>
-
-{% endfor %}
-
-    {% else %}
-
-        <span class="text-gray-400">
-            N/A
-        </span>
-
-    {% endif %}
-
-</td>
+                    <!-- Dynamic Price Columns -->
+                    {% for store in stores %}
 
                     <td>
 
-    {% if item.prices.FreshCo %}
+                        {% with price_data=item.prices|get_item:store.name %}
 
-        <div class="flex flex-col gap-2">
+                            {% if price_data %}
 
-            <span class="font-semibold text-lg">
+                                <div class="flex flex-col gap-2">
 
-                ${{ item.prices.FreshCo.price }}
+                                    <span class="font-semibold text-lg">
 
-            </span>
+                                        ${{ price_data.price }}
 
-            <div class="flex gap-2">
+                                    </span>
 
-                <a
-                    href="{% url 'price_edit' item.prices.FreshCo.id %}"
-                    class="btn btn-warning btn-xs"
-                >
-                    ✏️ Edit
-                </a>
+                                    <div class="flex gap-2">
 
-                <a
-                    href="{% url 'price_delete' item.prices.FreshCo.id %}"
-                    class="btn btn-error btn-xs text-white"
-                >
-                    🗑 Delete
-                </a>
+                                        <a
+                                            href="{% url 'price_edit' price_data.id %}"
+                                            class="btn btn-warning btn-xs"
+                                        >
+                                            ✏️ Edit
+                                        </a>
 
-            </div>
+                                        <a
+                                            href="{% url 'price_delete' price_data.id %}"
+                                            class="btn btn-error btn-xs text-white"
+                                        >
+                                            🗑 Delete
+                                        </a>
 
-        </div>
+                                    </div>
 
-    {% else %}
+                                </div>
 
-        <span class="text-gray-400">
-            N/A
-        </span>
+                            {% else %}
 
-    {% endif %}
+                                <span class="text-gray-400">
+                                    N/A
+                                </span>
 
-</td>
+                            {% endif %}
+
+                        {% endwith %}
+
+                    </td>
+
+                    {% endfor %}
 
                     <!-- Cheapest -->
                     <td>
 
-                        <div class="badge badge-success badge-lg gap-2 p-4">
+                        {% if item.cheapest_price %}
 
-                            💰 {{ item.cheapest_store }}
+                            <div class="badge badge-success badge-lg gap-2 p-4">
 
-                            (${{ item.cheapest_price }})
+                                💰 {{ item.cheapest_store }}
 
-                        </div>
+                                (${{ item.cheapest_price }})
+
+                            </div>
+
+                        {% else %}
+
+                            <span class="text-gray-400">
+                                No prices available
+                            </span>
+
+                        {% endif %}
 
                     </td>
 
@@ -241,7 +204,10 @@
 
                 <tr>
 
-                    <td colspan="5" class="text-center py-10 text-gray-400">
+                    <td
+                        colspan="{{ stores|length|add:3 }}"
+                        class="text-center py-10 text-gray-400"
+                    >
 
                         No products available
 

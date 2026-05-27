@@ -38,20 +38,13 @@ urlpatterns = [
 ),
 path('register/', views.register, name='register'),
     path('products/', ProductListView.as_view(), name='product_list'),
-    #path('category/<int:pk>/products/',CategoryProductListView.as_view(),name='category_products'),
-    #path('categories/', CategoryListView.as_view(), name='category_list'),
-    path('stores/', StoreListView.as_view(), name='store_list'),
     path('add/', ProductCreateView.as_view(), name='product_add'),
     path('edit/<int:pk>/', ProductUpdateView.as_view(), name='product_edit'),
     path('delete/<int:pk>/', ProductDeleteView.as_view(), name='product_delete'),
     path('cart/add/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
     path('cart/update/<int:item_id>/', views.update_cart_item, name='update_cart_item'),
     path('cart/remove/<int:item_id>/', views.remove_cart_item, name='remove_cart_item'),
-    path(
-    "price/<int:pk>/edit/",
-    views.PriceUpdateView.as_view(),
-    name="price_edit",
-),
+   
     path(
         'categories/',
         CategoryListView.as_view(),
