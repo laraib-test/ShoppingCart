@@ -31,7 +31,7 @@ A simple Django-based Shopping Cart application that allows users to:
 - CSS
 - SQLite
 
----
+
 
 ## Project Structure
 
@@ -53,7 +53,6 @@ Shoppingcart/
 │
 └── venv/
 
----
 
 ## Installation
 
