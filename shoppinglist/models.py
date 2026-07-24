@@ -95,9 +95,9 @@ class Product(models.Model):
     )
 
     name = models.CharField(
-        max_length=255
+    max_length=255,
+    unique=True
     )
-
     quantity = models.DecimalField(
         max_digits=6,
         decimal_places=2,

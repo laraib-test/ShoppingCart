@@ -1,6 +1,4 @@
 from django import forms
-
-from django import forms
 from .models import Price, Store, Product, Category
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm  
@@ -31,6 +29,41 @@ class RegisterForm(UserCreationForm):
                 'class': 'input input-bordered w-full',
                 'placeholder': f'Enter {field_name}',
             })
+
+
+class ProductForm(forms.ModelForm):
+
+    class Meta:
+
+        model = Product
+
+        fields = [
+            'category',
+            'name',
+            'quantity',
+            'unit',
+            'image',
+        ]
+
+    def clean_name(self):
+
+        name = self.cleaned_data["name"].strip()
+
+        duplicate = Product.objects.filter(
+            name__iexact=name
+        )
+
+        if self.instance.pk:
+            duplicate = duplicate.exclude(
+                pk=self.instance.pk
+            )
+
+        if duplicate.exists():
+            raise forms.ValidationError(
+                "A product with this name already exists."
+            )
+
+        return name
 
 class PriceForm(forms.ModelForm):
 
@@ -77,71 +110,63 @@ class PriceForm(forms.ModelForm):
                 }
             ),
         }
-    def clean(self):
 
+    def clean(self):
         cleaned_data = super().clean()
 
         store = cleaned_data.get("store")
         product_name = cleaned_data.get("product_name")
 
         if store and product_name:
-
             existing_product = Product.objects.filter(
                 name__iexact=product_name.strip()
             ).first()
 
             if existing_product:
-
-              duplicate = Price.objects.filter(
+                duplicate = Price.objects.filter(
                     store=store,
                     product=existing_product
                 )
-                # ignore current object during edit
-            if self.instance.pk:
+
+                # Ignore current object when editing
+                if self.instance.pk:
                     duplicate = duplicate.exclude(
                         pk=self.instance.pk
                     )
 
-            if duplicate.exists():
-
+                if duplicate.exists():
                     raise forms.ValidationError(
-                        "This product already has a price for this store."
+                        "This product already exists for this store."
                     )
 
         return cleaned_data
 
     def save(self, commit=True):
-
         price = super().save(commit=False)
 
-        # ONLY create product when adding NEW price
-        if not self.instance.pk:
+        product_name = self.cleaned_data.get("product_name")
+        category = self.cleaned_data.get("category")
 
-            category = self.cleaned_data.get("category")
+        product = Product.objects.filter(
+            name__iexact=product_name.strip()
+        ).first()
 
-            product_name = self.cleaned_data.get(
-                "product_name"
-            )
-
-            product, created = Product.objects.get_or_create(
-
+        if not product:
+            product = Product.objects.create(
                 name=product_name.strip(),
-
-                defaults={
-                    "category": category,
-                    "quantity": 1,
-                    "unit": "pcs",
-                }
+                category=category,
+                quantity=1,
+                unit="pcs",
             )
 
-            price.product = product
+        price.product = product
+
         if commit:
             price.save()
 
         return price
 
-    
-        
+
 class StoreForm(forms.ModelForm):
     
     class Meta:

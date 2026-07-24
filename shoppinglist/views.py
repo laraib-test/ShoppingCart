@@ -12,7 +12,7 @@ from .models import (
     CartItem
 )
 from .models import Price
-from .forms import PriceForm,StoreForm
+from .forms import PriceForm, ProductForm, StoreForm
 from django.views.generic import TemplateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import get_object_or_404
@@ -143,7 +143,7 @@ class PriceCreateView(
 
     template_name = "shoppinglist/price_form.html"
 
-    success_url = reverse_lazy("price_add")
+    success_url = reverse_lazy("product_list")
 
     success_message = "Price added successfully!"
 
@@ -204,14 +204,7 @@ class ProductListView(ListView):
 class ProductCreateView(CreateView):
     model = Product
 
-    fields = [
-        'category',
-        'name',
-        'quantity',
-        'unit',
-        #'price',#
-        'image'
-    ]
+    form_class = ProductForm
 
     template_name = 'shoppinglist/product_form.html'
     success_url = reverse_lazy('product_list')
@@ -219,14 +212,7 @@ class ProductCreateView(CreateView):
 class ProductUpdateView(UpdateView):
     model = Product
 
-    fields = [
-        'category',
-        'name',
-        'quantity',
-        'unit',
-        #'price',
-        'image'
-    ]
+    form_class = ProductForm
 
     template_name = 'shoppinglist/product_form.html'
     success_url = reverse_lazy('product_list')
@@ -345,7 +331,7 @@ class PriceComparisonView(TemplateView):
           
             context["stores"] = stores
             context["comparison_data"] = comparison_data
-            
+
 
         return context
 

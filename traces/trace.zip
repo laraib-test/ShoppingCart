@@ -1,0 +1,18 @@
+@pytest.fixture
+def page():
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=False)
+        context = browser.new_context()
+
+        # Start tracing
+        context.tracing.start(screenshots=True, snapshots=True)
+
+        page = context.new_page()
+        yield page
+
+        # Save trace
+        os.makedirs("traces", exist_ok=True)
+        context.tracing.stop(path="traces/trace.zip")
+
+        context.close()
+        browser.close()
