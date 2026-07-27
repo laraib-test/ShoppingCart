@@ -56,11 +56,11 @@ Shoppingcart/
 ---
 ## Installation
 
-### 1. Clone Repository
+## 1. Clone Repository
 ```bash
 git clone https://github.com/laraib-test/Shoppingcart.git
 cd Shoppingcart
-
+```
 ## Create Virtual Environment
 python -m venv venv
 
@@ -79,10 +79,8 @@ python manage.py runserver
 http://127.0.0.1:8007/
 ## Create Superuser
 python manage.py createsuperuser
-Open browser
-git clone https://github.com/laraib-test/Shoppingcart.git
-cd Shoppingcart
-```
+
+``
 ## Playwright Test Automation
 
 This project uses **Playwright with Python** for end-to-end (E2E) testing to validate the functionality of the Django Shopping Cart application. Playwright provides reliable cross-browser automation with powerful features such as automatic waiting, screenshots, tracing, and HTML test reports.
