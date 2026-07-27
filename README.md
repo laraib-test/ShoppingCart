@@ -82,3 +82,50 @@ python manage.py createsuperuser
 Open browser
 git clone https://github.com/laraib-test/Shoppingcart.git
 cd Shoppingcart
+## Playwright Test Automation
+
+This project uses **Playwright with Python** for end-to-end (E2E) testing to validate the functionality of the Django Shopping Cart application. Playwright provides reliable cross-browser automation with powerful features such as automatic waiting, screenshots, tracing, and HTML test reports.
+
+### Installing Playwright
+
+Create and activate a Python virtual environment, then install the required dependencies:
+
+```bash
+pip install playwright
+pip install pytest pytest-playwright pytest-html
+playwright install
+```
+
+To verify the installation:
+
+```bash
+playwright --version
+```
+
+Run the test suite using:
+
+```bash
+pytest tests -v
+```
+
+Generate an HTML test report:
+
+```bash
+pytest tests --html=reports/report.html --self-contained-html
+```
+
+---
+
+## Page Object Model (POM)
+
+This project follows the **Page Object Model (POM)** design pattern to improve the maintainability, readability, and scalability of the test automation framework. POM separates page-specific locators and actions from the test scripts, allowing tests to focus on business scenarios rather than UI implementation details.
+
+The framework is organized with dedicated page classes such as:
+
+- `BasePage` – Common browser actions and reusable methods.
+- `HomePage` – Homepage navigation and interactions.
+- `ProductPage` – Product selection and product-related actions.
+- `PricePage` – Product price management and updates.
+- `CartPage` – Shopping cart operations.
+
+
